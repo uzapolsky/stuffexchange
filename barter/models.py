@@ -2,6 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Category(models.Model):
+    name = models.CharField(
+        'название',
+        max_length=50,
+    )
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+
+    def __str__(self):
+        return self.name
+
+
 class Item(models.Model):
     name = models.CharField(
         'название',
@@ -12,7 +26,7 @@ class Item(models.Model):
     )
 
     category = models.ForeignKey(
-        'Category',
+        Category,
         verbose_name='категория',
         related_name='items',
         on_delete=models.SET_NULL,
@@ -57,17 +71,3 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.item.name
-
-
-class Category(models.Model):
-    name = models.CharField(
-        'название',
-        max_length=50,
-    )
-
-    class Meta:
-        verbose_name = 'категория'
-        verbose_name_plural = 'категории'
-
-    def __str__(self):
-        return self.name
