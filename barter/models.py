@@ -45,8 +45,6 @@ class Item(models.Model):
         User,
         verbose_name='нужен',
         related_name='wished_items',
-        null=True,
-        blank=True,
     )
     added_at = models.DateTimeField(
         'добавлен в',
