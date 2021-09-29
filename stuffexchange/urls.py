@@ -11,6 +11,7 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/', views.show_all_items, name='post'),
+    path('', views.index, name='/'),
 ]
 
 if settings.DEBUG:
