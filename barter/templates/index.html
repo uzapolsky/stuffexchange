@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block title %}Task manager{% endblock %}
+
+{% block content %}
+
+    <div class="card text-center w-100 border border-white">
+        <div class="card-body">
+            <h5 class="card-title p-3">Сервис обмена вещами</h5>
+            <a href="#" class="btn btn-primary">Посмотреть вещи</a>
+        </div>
+    </div>
+{% endblock %}
