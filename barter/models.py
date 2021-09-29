@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
+from django.utils import timezone
 
 
 class Category(models.Model):
@@ -23,6 +24,7 @@ class Item(models.Model):
     )
     description = models.TextField(
         'описание',
+        blank=True,
     )
 
     category = models.ForeignKey(
@@ -43,6 +45,13 @@ class Item(models.Model):
         User,
         verbose_name='нужен',
         related_name='wished_items',
+        null=True,
+        blank=True,
+    )
+    added_at = models.DateTimeField(
+        'добавлен в',
+        default=timezone.now,
+        db_index=True,
     )
 
     class Meta:
