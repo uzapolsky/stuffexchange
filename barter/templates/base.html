@@ -13,7 +13,7 @@
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container">
-            <a href="{% url '/' %}" class="navbar-brand">Обмен вещами</a>
+            <a href="{% url 'home' %}" class="navbar-brand">Обмен вещами</a>
 
             <button 
                 class="navbar-toggler" 
@@ -35,7 +35,7 @@
                         </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{% url 'logout' %}" class="nav-link">
                                     Выход
                                 </a>
                             </li>
@@ -51,7 +51,7 @@
                         </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{% url 'login' %}" class="nav-link">
                                     Вход
                                 </a>
                             </li>

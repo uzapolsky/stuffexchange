@@ -6,12 +6,15 @@ from django.urls import include, path
 
 from barter import views
 from . import settings
+from django.contrib.auth.views import LogoutView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post/', views.show_all_items, name='post'),
-    path('', views.index, name='/'),
+    path('', views.index, name='home'),
+    path('login/', views.LoginUserView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 ]
 
 if settings.DEBUG:
