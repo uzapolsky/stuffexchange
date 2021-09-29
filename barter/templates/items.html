@@ -11,8 +11,14 @@
 {% block content %}
 
 <div class="container">
-  <h1 class="text-center">Хотят обменять</h1>
-  <div class="row row-cols-md-3">
+  <div class="dropdown text-center outline-primary">
+    <a class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Категории</a>
+    <div class="dropdown-menu">
+        <a href="#" class="dropdown-item">Категория</a>
+        <a href="#" class="dropdown-item">Другая категория</a>
+    </div>
+  </div>
+  <div class="row row-cols-md-3 mt-5">
     {% for item in items %}
       <div class="card">
         <a href="#" class="text-decoration-none">
