@@ -3,6 +3,8 @@ import os
 from environs import Env
 from pathlib import Path
 
+import django_heroku
+
 
 env = Env()
 env.read_env()
@@ -103,3 +105,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+django_heroku.settings(locals())
