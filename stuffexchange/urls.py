@@ -15,6 +15,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('login/', views.LoginUserView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('signup/', views.SignupUserView.as_view(), name="signup")
 ]
 
 if settings.DEBUG:
