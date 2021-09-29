@@ -11,11 +11,11 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('post/', views.show_all_items, name='post'),
+    path('items/', views.show_all_items, name='items'),
     path('', views.index, name='home'),
     path('login/', views.LoginUserView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
-    path('signup/', views.SignupUserView.as_view(), name="signup")
+    path('signup/', views.SignupUserView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
