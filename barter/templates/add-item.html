@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block title %}Stuff exchange{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center"> 
+    <div class="col-md-5">
+        {% bootstrap_messages %}
+        <form action="{% url 'add-item' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% bootstrap_form form %}
+
+            {% bootstrap_button button_type="submit" content="Добавить вещь" %}
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}

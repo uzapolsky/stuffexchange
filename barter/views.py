@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
-from .models import Category, Item
+from .models import Category, Item, Photo, AddItemFullForm
 
 
 class LoginUserView(LoginView):
@@ -31,6 +31,34 @@ class SignupUserView(View):
             return redirect('home')
         return render(request, 'registration/signup.html', {'form': form})
 
+class AddItemView(View):
+
+    def get(self, request):
+        form = AddItemFullForm()
+        return render(request, 'add-item.html', {'form': form})
+
+    def post(self, request):
+        form = AddItemFullForm(request.POST, request.FILES or None)
+        print(form.errors)
+        images = request.FILES.getlist('images')
+        print(images, type(images))
+        if form.is_valid():
+            user = request.user
+            name = form.cleaned_data['name']
+            description = form.cleaned_data['description']
+            category = form.cleaned_data['category']
+            item = Item.objects.create(
+                owner=user,
+                name=name,
+                description=description,
+                category=category
+            )
+            for image in images:
+                Photo.objects.create(item=item,image=image)
+            return redirect('user-items')
+        else:
+            print("Form invalid")
+            return redirect('add-item')
 
 def index(request):
     return render(request, 'index.html')
