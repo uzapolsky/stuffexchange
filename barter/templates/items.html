@@ -13,6 +13,16 @@
 <div class="container">
   {% block usercontent %}{% endblock %}
   <div class="dropdown text-center outline-primary mb-2">
+    <form method="post">
+      {% csrf_token %}
+      <label class="visually-hidden">Категории</label>
+      <select onChange="form.submit()" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" name="categories">
+        <option value={{form.category}}>
+      </select>
+    </form>
+  </div>
+  {% comment %}
+  <div class="dropdown text-center outline-primary mb-2">
     <a class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Категории</a>
     <div class="dropdown-menu">
       {% for category in categories %}
@@ -20,6 +30,7 @@
       {% endfor %}
     </div>
   </div>
+  {% endcomment %}
     <div class="row row-cols-3">
       {% for item in items %}
         <div class="col">
