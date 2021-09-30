@@ -6,6 +6,29 @@ from import_export.admin import ImportExportModelAdmin
 from .models import Category, Item, Photo
 
 
+class UserResource(resources.ModelResource):
+    class Meta:
+        model = User
+
+
+class CategoryResource(resources.ModelResource):
+    class Meta:
+        model = Category
+
+
+class ItemResource(resources.ModelResource):
+    class Meta:
+        model = Item
+
+
+admin.site.unregister(User)
+
+@admin.register(User)
+class UserAdmin(ImportExportModelAdmin):
+    list_display = ('username', 'first_name', 'last_name', 'is_staff')
+    resource_class = UserResource
+
+
 class PhotoInline(admin.TabularInline):
     model = Photo
     extra = 1
@@ -13,23 +36,12 @@ class PhotoInline(admin.TabularInline):
 
 
 @admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
+class ItemAdmin(ImportExportModelAdmin):
     inlines = (PhotoInline,)
     raw_id_fields = ('wished_by',)
+    resource_class = ItemResource
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    pass
-
-
-class UserResource(resources.ModelResource):
-
-    class Meta:
-        model = User
-
-
-admin.site.unregister(User)
-@admin.register(User)
-class UserAdmin(ImportExportModelAdmin):
-    resource_class = UserResource
+class CategoryAdmin(ImportExportModelAdmin):
+    resource_class = CategoryResource
