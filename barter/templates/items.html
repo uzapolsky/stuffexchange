@@ -17,7 +17,9 @@
       {% csrf_token %}
       <label class="visually-hidden">Категории</label>
       <select onChange="form.submit()" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" name="categories">
-        <option value={{form.category}}>
+        {% for category in form.category %}
+          {{category}}
+        {% endfor %}
       </select>
     </form>
   </div>
