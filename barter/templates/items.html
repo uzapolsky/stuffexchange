@@ -11,27 +11,29 @@
 {% block content %}
 
 <div class="container">
-  <div class="dropdown text-center outline-primary">
+  <div class="dropdown text-center outline-primary mb-2">
     <a class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Категории</a>
     <div class="dropdown-menu">
       {% for category in categories %}
-        <a href="#" class="dropdown-item">{{ category }}</a>
+        <a href="#" class="dropdown-item">{{ category.name }}</a>
       {% endfor %}
     </div>
   </div>
-  <div class="row row-cols-md-3 mt-5">
-    {% for item in items %}
-      <div class="card">
-        <a href="#" class="text-decoration-none">
-          <img class="img-fluid img-center" style="width: auto; height: 300px; margin-left: auto; margin-right: auto; display: block;" src="{{ item.photos.first.image.url }}" style="card-img-top" alt="предмет">
-          <div class="card-body text-center">
-            <h5 class="card-title">{{ item }}</h5>
-            <p class="card-text text-muted">{{ item.category }}</p>
+    <div class="row row-cols-3">
+      {% for item in items %}
+        <div class="col">
+          <div class="card p-3 m-2">
+            <a href="#" class="text-decoration-none">
+              <img class="img-fluid img-center" style="width: auto; height: 200px; margin-left: auto; margin-right: auto; display: block;" src="{{ item.photos.first.image.url }}" style="card-img-top" alt="предмет">
+              <div class="card-body text-center">
+                <h5 class="card-title">{{ item }}</h5>
+                <p class="card-text text-muted">{{ item.category }}</p>
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
-    {% endfor %}
-  </div>
+        </div>
+      {% endfor %}
+    </div>
 </div>
 
 <nav>

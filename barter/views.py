@@ -38,7 +38,5 @@ def index(request):
 
 def show_all_items(request):
     items = Item.objects.all()
-    categories_raw = Category.objects.all()
-    categories = [category.name for category in categories_raw]
-    print(categories)
+    categories = Category.objects.all()
     return render(request, 'items.html', context={'items': items, 'categories': categories})
