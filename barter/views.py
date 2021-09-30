@@ -40,3 +40,10 @@ def show_all_items(request):
     items = Item.objects.all()
     categories = Category.objects.all()
     return render(request, 'items.html', context={'items': items, 'categories': categories})
+
+
+def show_my_items(request):
+    user = request.user.id
+    items = Item.objects.filter(owner=user)
+    categories = Category.objects.all()
+    return render(request, 'user-items.html', context={'items': items, 'categories': categories})
