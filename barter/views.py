@@ -69,19 +69,20 @@ def index(request):
 
 def show_all_items(request):
     categories = Category.objects.all()
+    category_names = ['Все категории']
+    category_names.extend([category.name for category in categories])
+
+    items = Item.objects.select_related('category')
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
-            items = Item.objects.all()
             context = {'items': items, 'categories': categories, 'form': form}
             return render(request, 'items.html')
-        category_id = request.POST.get('categories')
-        category = Category.objects.get(id=category_id)
-        items = category.items.all()
+        if int(category_id := request.POST.get('categories')):
+            items = items.filter(category=category_id)
     else:
         form = CategoryForm()
-        items = Item.objects.all()
-    context = {'items': items, 'categories': categories, 'form': form}
+    context = {'items': items, 'categories': category_names, 'form': form}
     context.update(csrf(request))
     return render(request, 'items.html', context=context)
 
@@ -91,51 +92,3 @@ def show_my_items(request):
     items = Item.objects.filter(owner=user)
     categories = Category.objects.all()
     return render(request, 'user-items.html', context={'items': items, 'categories': categories})
-
-
-
-# def calculate_products(request):
-#     if request.method == 'POST':
-#         form = DaysForm(request.POST)
-#         if not form.is_valid():
-#             return render(request, f'{TEMPLATE}/calculator.html')
-#         days_to_calculate = int(request.POST.get('days', 0))
-#         weekdays = count_days(days_to_calculate)
-
-#         ingredients = (
-#             Meal.objects
-#             .filter(date__in=weekdays, customer=request.user)
-#             .values_list(
-#                 'meal_positions__dish__positions__ingredient__name',
-#                 'meal_positions__dish__positions__quantity',
-#                 'meal_positions__dish__positions__ingredient__units',
-#                 'meal_positions__dish__positions__ingredient__price',
-#             )
-#         )
-
-#         total_ingredients = {}
-#         total_sum = 0
-#         for ingredient, quantity, units, price in ingredients:
-#             if price is None:
-#                 price = 0
-#             total_ingredients.setdefault(ingredient, [0, units, 0])
-#             total_ingredients[ingredient][0] += float(f'{quantity:.2f}')
-#             ingredient_price = quantity * int(price)
-#             if units == 'г' or units == 'мл':
-#                 ingredient_price = quantity * int(price) / 1000
-#             total_ingredients[ingredient][2] += float(f'{ingredient_price:.2f}')
-#             total_sum += ingredient_price
-
-#         context = {
-#             'ingredients': total_ingredients, 'form': form,
-#             'total_sum': round(total_sum)
-#         }
-#         context.update(csrf(request))
-#         if weekdays:
-#             context['start_day'] = weekdays[0]
-#             context['end_day'] = weekdays[-1]
-#     else:
-#         form = DaysForm()
-#         context = {'form': form}
-
-#     return render(request, f'{TEMPLATE}/calculator.html', context)
