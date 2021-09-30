@@ -6,7 +6,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-{% block title %}Task manager{% endblock %}
+{% block title %}Stuff exchange{% endblock %}
 
 {% block content %}
 
@@ -14,8 +14,9 @@
   <div class="dropdown text-center outline-primary">
     <a class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Категории</a>
     <div class="dropdown-menu">
-        <a href="#" class="dropdown-item">Категория</a>
-        <a href="#" class="dropdown-item">Другая категория</a>
+      {% for category in categories %}
+        <a href="#" class="dropdown-item">{{ category }}</a>
+      {% endfor %}
     </div>
   </div>
   <div class="row row-cols-md-3 mt-5">

@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
-from .models import Item
+from .models import Category, Item
 
 
 class LoginUserView(LoginView):
@@ -38,4 +38,7 @@ def index(request):
 
 def show_all_items(request):
     items = Item.objects.all()
-    return render(request, 'items.html', context={'items': items})
+    categories_raw = Category.objects.all()
+    categories = [category.name for category in categories_raw]
+    print(categories)
+    return render(request, 'items.html', context={'items': items, 'categories': categories})
