@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'barter',
     'debug_toolbar',
+    'import_export',
 ]
 
 MIDDLEWARE = [

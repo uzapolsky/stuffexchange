@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
-from .models import Item, Photo, Category
+from .models import Category, Item, Photo
 
 
 class PhotoInline(admin.TabularInline):
@@ -18,3 +21,15 @@ class ItemAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     pass
+
+
+class UserResource(resources.ModelResource):
+
+    class Meta:
+        model = User
+
+
+admin.site.unregister(User)
+@admin.register(User)
+class UserAdmin(ImportExportModelAdmin):
+    resource_class = UserResource
