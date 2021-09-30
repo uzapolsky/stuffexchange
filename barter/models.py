@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.forms import ModelForm, FileField, ClearableFileInput
 
 
 class Category(models.Model):
@@ -80,15 +79,3 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.item.name
-
-
-class AddItemForm(ModelForm):
-    class Meta:
-        model = Item
-        fields = ['name', 'description', 'category']
-
-class AddItemFullForm(AddItemForm):
-    images = FileField(widget=ClearableFileInput(attrs={'multiple': True}))
-
-    class Meta(AddItemForm.Meta):
-        fields = AddItemForm.Meta.fields + ['images',]

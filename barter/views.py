@@ -5,7 +5,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 
-from .models import Category, Item, Photo, AddItemFullForm
+from .models import Category, Item, Photo
+from .forms import AddItemFullForm
 
 
 class LoginUserView(LoginView):
@@ -19,7 +20,6 @@ class SignupUserView(View):
         form = UserCreationForm()
         return render(request, 'registration/signup.html', {'form': form})
 
-
     def post(self, request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -30,6 +30,7 @@ class SignupUserView(View):
             login(request, user)
             return redirect('home')
         return render(request, 'registration/signup.html', {'form': form})
+
 
 class AddItemView(View):
 
@@ -59,6 +60,7 @@ class AddItemView(View):
         else:
             print("Form invalid")
             return redirect('add-item')
+
 
 def index(request):
     return render(request, 'index.html')
