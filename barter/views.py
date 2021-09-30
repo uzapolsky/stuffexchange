@@ -64,7 +64,7 @@ class AddItemView(View):
 
 
 def index(request):
-    return render(request, 'index.html')
+    return redirect('items')
 
 
 def show_all_items(request):
