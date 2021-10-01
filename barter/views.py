@@ -54,10 +54,10 @@ class AddItemView(View):
                 owner=user,
                 name=name,
                 description=description,
-                category=category
+                category=category,
             )
             for image in images:
-                Photo.objects.create(item=item,image=image)
+                Photo.objects.create(item=item, image=image)
             return redirect('user-items')
         else:
             print("Form invalid")
@@ -107,3 +107,10 @@ def show_my_items(request):
 def show_item(request, item_id):
     item = Item.objects.get(id=item_id)
     return render(request, 'show-item.html', context={'item': item})
+
+
+def show_offers(request):
+    user = request.user.id
+    items = Item.objects.filter(owner=user)
+
+    return render(request, 'offers.html')
