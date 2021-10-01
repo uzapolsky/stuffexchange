@@ -42,14 +42,39 @@
 
 <nav>
   <ul class="pagination justify-content-center mt-3">
-    <li class="page-item"><a href="#" class="page-link">Previous</a></li>
-    <li class="page-item"><a href="#" class="page-link">1</a></li>
-    <li class="page-item"><a href="#" class="page-link">2</a></li>
-    <li class="page-item"><a href="#" class="page-link">3</a></li>
-    <li class="page-item"><a href="#" class="page-link">4</a></li>
-    <li class="page-item"><a href="#" class="page-link">5</a></li>
-    <li class="page-item"><a href="#" class="page-link">Next</a></li>
+    {% if items.has_previous %}
+      <li class="page-item">
+        <a href="?page={{ items.previous_page_number }}" class="page-link">Предыдущая</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a href="#" class="page-link">Предыдущая</a>
+      </li>
+    {% endif %}
+
+    {% for page in items.paginator.page_range %}
+      {% if page == items.number %}
+        <li class="page-item active" aria-current="page">
+          <a href="?page={{ items.number }}" class="page-link">{{ items.number }}
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a href="?page={{ page }}" class="page-link">{{ page }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if items.has_next %}
+      <li class="page-item">
+        <a href="?page={{ items.next_page_number }}" class="page-link">Следующая</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a href="#" class="page-link">Следующая</a>
+      </li>
+    {% endif %}
+    
   </ul>
 </nav>
-
 {% endblock %}

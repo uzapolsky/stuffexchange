@@ -108,12 +108,13 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-if env('CLOUDINARY', False):
+if env.bool('CLOUDINARY', False):
     CLOUDINARY_STORAGE = {
         'CLOUD_NAME': env('CLOUD_NAME'),
         'API_KEY': env('API_KEY'),
         'API_SECRET': env('API_SECRET'),
     }
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 django_heroku.settings(locals(), databases=False)

@@ -1,13 +1,15 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
+from django.core import paginator
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.template.context_processors import csrf
 from django.urls import reverse
 from django.views import View
 
-from .models import Category, Item, Photo
 from .forms import AddItemFullForm, CategoryForm
+from .models import Category, Item, Photo
 
 
 class LoginUserView(LoginView):
@@ -68,7 +70,7 @@ def index(request):
 
 
 def show_all_items(request):
-    items = Item.objects.select_related('category')
+    items = Item.objects.select_related('category').order_by('name')
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
@@ -78,6 +80,11 @@ def show_all_items(request):
             items = items.filter(category=category_id)
     else:
         form = CategoryForm()
+    
+    items_per_page = 6
+    paginator = Paginator(items, items_per_page)
+    page = request.GET.get('page')
+    items = paginator.get_page(page)
     context = {'items': items, 'form': form}
     context.update(csrf(request))
     return render(request, 'items.html', context=context)
@@ -87,4 +94,8 @@ def show_my_items(request):
     user = request.user.id
     items = Item.objects.filter(owner=user)
     categories = Category.objects.all()
+    items_per_page = 6
+    paginator = Paginator(items, items_per_page)
+    page = request.GET.get('page')
+    items = paginator.get_page(page)
     return render(request, 'user-items.html', context={'items': items, 'categories': categories})
