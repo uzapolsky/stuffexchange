@@ -91,4 +91,5 @@ def show_my_items(request):
 
 
 def show_item(request, item_id):
-    return render(request, 'show-item.html')
+    item = Item.objects.get(id=item_id)
+    return render(request, 'show-item.html', context={'item': item})

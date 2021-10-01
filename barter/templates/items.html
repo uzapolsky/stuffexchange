@@ -28,7 +28,7 @@
       <div class="col">
         <div class="card p-3 m-2">
           <a href="{% url 'show_item' item.id %}" class="text-decoration-none">
-            <img class="img-fluid img-center" style="width: auto; height: 200px; margin-left: auto; margin-right: auto; display: block;" src="{{ item.photos.first.image.url }}" style="card-img-top" alt="предмет">
+            <img class="img-fluid img-center" style="width: auto; height: 200px; margin-left: auto; margin-right: auto; display: block;" src="{{ item.photos.first.image.url }}" alt="предмет">
             <div class="card-body text-center">
               <h5 class="card-title">{{ item }}</h5>
               <p class="card-text text-muted">{{ item.category }}</p>
