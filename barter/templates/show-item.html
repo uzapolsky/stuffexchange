@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block title %}Имя предмета{% endblock %}
+{% block style %}
+<style>
+html, body {
+    height: 100%;
+}
+.container {
+    height: 100%;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid h-100 d-flex flex-column justify-content-center">
+  <div class="row mb-3">
+    <div class="col-md-5 align-items-center text-center">
+      <small class="text-muted">{{ item.category }}</small>
+      <h5>{{ item.name }}</h5>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="row mb-3">
+      <div class="col-md-5 align-items-center">
+        <img src="{{ item.photos.first.image.url }}" class="card-img-top" alt="предмет">
+      </div>
+      <div class="col-md-7 text-center">
+        <div class="card-body">
+          <h5 class="card-title">Описание</h5>
+          <p class="card-text">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-md-5 align-items-left text-center ">
+      <div class="card-group ">
+        {% for photo in item.photos.all %}
+          <div class="card p-3 m-2 border-0">
+            <img src="{{ photo.image.url }}" style="max-height: 150px; display: block;" alt="предмет">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button class="btn btn-secondary">Предложить обмен</button>
+    </div>
+  </div>
+{% endblock %}
