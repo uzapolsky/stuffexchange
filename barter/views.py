@@ -1,3 +1,5 @@
+from itertools import zip_longest
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
@@ -112,6 +114,12 @@ def show_item(request, item_id):
 
 def show_offers(request):
     user = request.user.id
-    items = Item.objects.filter(owner=user)
+    items = Item.objects.filter(owner=user).prefetch_related('wished_by', 'category')
+    item_users = [(item, item.wished_by.all()) for item in items if item.wished_by.all().exists()]
+    
+    wanted_items = list()
+    for item, users in item_users:
+        for user in users:
+            wanted_items.append((item, user))
 
-    return render(request, 'offers.html', context={'items': items})
+    return render(request, 'offers.html', context={'wanted_items': wanted_items})
