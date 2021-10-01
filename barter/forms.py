@@ -18,10 +18,11 @@ class AddItemFullForm(AddItemForm):
 
 
 class CategoryForm(forms.Form):
-    category_choices = [(0, 'Все категории')]
+    category_choices = [(0, 'Категории'), (0, 'Все категории')]
     category_choices.extend(Category.objects.values_list('id', 'name'))
     category = forms.ChoiceField(
         label='days',
         choices=category_choices,
         required=False,
+        initial='0',
     )

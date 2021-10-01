@@ -68,21 +68,17 @@ def index(request):
 
 
 def show_all_items(request):
-    categories = Category.objects.all()
-    category_names = ['Все категории']
-    category_names.extend([category.name for category in categories])
-
     items = Item.objects.select_related('category')
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
-            context = {'items': items, 'categories': categories, 'form': form}
+            context = {'items': items, 'form': form}
             return render(request, 'items.html')
         if int(category_id := request.POST.get('categories')):
             items = items.filter(category=category_id)
     else:
         form = CategoryForm()
-    context = {'items': items, 'categories': category_names, 'form': form}
+    context = {'items': items, 'form': form}
     context.update(csrf(request))
     return render(request, 'items.html', context=context)
 
