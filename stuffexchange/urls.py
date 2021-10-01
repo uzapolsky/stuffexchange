@@ -1,13 +1,11 @@
 import debug_toolbar
-
+from barter import views
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 
-from barter import views
 from . import settings
-from django.contrib.auth.views import LogoutView
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.template.context_processors import csrf
 from django.urls import reverse
 from django.views import View
 
-from .models import Category, Item, Photo
 from .forms import AddItemFullForm, CategoryForm
+from .models import Item, Photo
 
 
 class LoginUserView(LoginView):
@@ -82,8 +83,15 @@ def handle_category_form(request, items):
     return context
 
 
+def pagination(request, items, items_per_page=6):
+    paginator = Paginator(items, items_per_page)
+    page = request.GET.get('page')
+    return paginator.get_page(page)
+
+
 def show_all_items(request):
-    items = Item.objects.select_related('category')
+    items = Item.objects.select_related('category').order_by('name')
+    items = pagination(request, items)
     context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
 
@@ -91,6 +99,7 @@ def show_all_items(request):
 def show_my_items(request):
     user = request.user.id
     items = Item.objects.filter(owner=user)
+    items = pagination(request, items)
     context = handle_category_form(request, items)
     return render(request, 'user-items.html', context=context)
 
