@@ -80,6 +80,7 @@ def handle_category_form(request, items):
             items = items.filter(category=category_id)
     else:
         form = CategoryForm()
+    items = pagination(request, items)
     context = {'items': items, 'form': form}
     context.update(csrf(request))
     return context
@@ -95,6 +96,7 @@ def show_all_items(request):
     user = request.user.id
     items = Item.objects.select_related('category').order_by('name').exclude(owner=user)
     items = pagination(request, items)
+
     context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
 
@@ -102,7 +104,6 @@ def show_all_items(request):
 def show_my_items(request):
     user = request.user.id
     items = Item.objects.filter(owner=user)
-    items = pagination(request, items)
     context = handle_category_form(request, items)
     return render(request, 'user-items.html', context=context)
 
