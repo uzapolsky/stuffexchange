@@ -67,8 +67,7 @@ def index(request):
     return redirect('items')
 
 
-def show_all_items(request):
-    items = Item.objects.select_related('category')
+def handle_category_form(request, items):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
@@ -80,14 +79,20 @@ def show_all_items(request):
         form = CategoryForm()
     context = {'items': items, 'form': form}
     context.update(csrf(request))
+    return context
+
+
+def show_all_items(request):
+    items = Item.objects.select_related('category')
+    context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
 
 
 def show_my_items(request):
     user = request.user.id
     items = Item.objects.filter(owner=user)
-    categories = Category.objects.all()
-    return render(request, 'user-items.html', context={'items': items, 'categories': categories})
+    context = handle_category_form(request, items)
+    return render(request, 'user-items.html', context=context)
 
 
 def show_item(request, item_id):
