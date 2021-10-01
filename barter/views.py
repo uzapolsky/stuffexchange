@@ -95,7 +95,6 @@ def pagination(request, items, items_per_page=6):
 def show_all_items(request):
     user = request.user.id
     items = Item.objects.select_related('category').order_by('name').exclude(owner=user)
-    items = pagination(request, items)
 
     context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
