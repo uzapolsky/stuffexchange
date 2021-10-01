@@ -18,6 +18,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('signup/', views.SignupUserView.as_view(), name='signup'),
     path('add-item/', views.AddItemView.as_view(), name='add-item'),
+    path('item/<int:item_id>', views.show_item, name='show_item')
 ]
 
 if settings.DEBUG:
