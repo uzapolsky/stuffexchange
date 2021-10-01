@@ -69,6 +69,12 @@ def index(request):
     return redirect('items')
 
 
+def pagination(request, items, items_per_page=6):
+    paginator = Paginator(items, items_per_page)
+    page = request.GET.get('page')
+    return paginator.get_page(page)
+
+
 def show_all_items(request):
     items = Item.objects.select_related('category').order_by('name')
     if request.method == 'POST':
@@ -81,10 +87,7 @@ def show_all_items(request):
     else:
         form = CategoryForm()
     
-    items_per_page = 6
-    paginator = Paginator(items, items_per_page)
-    page = request.GET.get('page')
-    items = paginator.get_page(page)
+    items = pagination(request, items)
     context = {'items': items, 'form': form}
     context.update(csrf(request))
     return render(request, 'items.html', context=context)
@@ -94,8 +97,5 @@ def show_my_items(request):
     user = request.user.id
     items = Item.objects.filter(owner=user)
     categories = Category.objects.all()
-    items_per_page = 6
-    paginator = Paginator(items, items_per_page)
-    page = request.GET.get('page')
-    items = paginator.get_page(page)
+    items = pagination(request, items)
     return render(request, 'user-items.html', context={'items': items, 'categories': categories})
