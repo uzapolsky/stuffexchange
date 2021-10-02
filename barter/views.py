@@ -1,10 +1,8 @@
-from itertools import zip_longest
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.template.context_processors import csrf
 from django.urls import reverse
 from django.views import View
@@ -125,4 +123,6 @@ def show_offers(request):
 
 
 def offer_exchange(request, item_id):
-    return render(request, 'exchange.html')
+    item = get_object_or_404(Item, pk=item_id)
+    item.wished_by.add(request.user.id)
+    return redirect('items')
