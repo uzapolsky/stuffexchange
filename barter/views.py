@@ -100,9 +100,9 @@ def show_all_items(request):
     return render(request, 'items.html', context=context)
 
 
-def show_my_items(request):
+def show_my_items(request, user_id):
     user = request.user.id
-    items = Item.objects.filter(owner=user).select_related('category')
+    items = Item.objects.filter(owner=user_id).select_related('category')
     context = handle_category_form(request, items)
     return render(request, 'user-items.html', context=context)
 
@@ -116,7 +116,7 @@ def show_offers(request):
     user = request.user.id
     items = Item.objects.filter(owner=user).prefetch_related('wished_by', 'category')
     item_users = [(item, item.wished_by.all()) for item in items if item.wished_by.all().exists()]
-    
+
     wanted_items = list()
     for item, users in item_users:
         for user in users:

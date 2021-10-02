@@ -38,7 +38,7 @@
                 {% if user.is_authenticated %}
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a href="{% url 'user-items' %}" class="nav-link">
+                                <a href="{% url 'user-items' user.id %}" class="nav-link">
                                     Хочу обменять
                                 </a>
                             </li>
