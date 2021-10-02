@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.utils import timezone
 
@@ -25,6 +26,7 @@ class Item(models.Model):
     description = models.TextField(
         'описание',
         blank=True,
+        validators=[MaxLengthValidator(1000)],
     )
 
     category = models.ForeignKey(

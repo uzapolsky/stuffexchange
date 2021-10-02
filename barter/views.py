@@ -58,7 +58,7 @@ class AddItemView(View):
             )
             for image in images:
                 Photo.objects.create(item=item, image=image)
-            return redirect('user-items')
+            return redirect('user-items', user.id)
         else:
             print("Form invalid")
             return redirect('add-item')

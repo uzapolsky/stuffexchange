@@ -14,7 +14,7 @@ class AddItemFullForm(AddItemForm):
     images = FileField(widget=ClearableFileInput(attrs={'multiple': True}))
 
     class Meta(AddItemForm.Meta):
-        fields = AddItemForm.Meta.fields + ['images',]
+        fields = AddItemForm.Meta.fields + ['images']
 
 
 class CategoryForm(forms.Form):
