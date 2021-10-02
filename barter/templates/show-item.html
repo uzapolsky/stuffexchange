@@ -59,7 +59,9 @@
       </div>
     </div>  
   </div>
-<div class="col text-center">
-  <a class="btn btn-primary" href="{% url 'exchange' item.id %}">Предложить обмен</a>
-</div>
+{% if item.owner.id != user.id %}
+  <div class="col text-center">
+    <a class="btn btn-primary" href="{% url 'exchange' item.id %}">Предложить обмен</a>
+  </div>
+{% endif %}
 {% endblock %}

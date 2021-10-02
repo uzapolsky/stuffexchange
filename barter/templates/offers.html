@@ -25,10 +25,10 @@
       </tr>
     </thead>
     <tbody>
-      {% for item, user in wanted_items %}
+      {% for item, proposer in wanted_items %}
       
         <tr style="transform: rotate(0);">
-          <td><a href="{% url 'user-items' user.id %}" class="stretched-link text-dark text-decoration-none">{{ user }}</a></td>
+          <td><a href="{% url 'user-items' proposer.id %}" class="stretched-link text-dark text-decoration-none">{{ proposer }}</a></td>
           <td>{{ item }}</td>
           <td>{{ item.category }}</td>
         </tr>
