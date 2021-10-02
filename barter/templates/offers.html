@@ -26,13 +26,13 @@
     </thead>
     <tbody>
       {% for item, user in wanted_items %}
-        
-          <tr>
-            <td><a href="/user/{{ user.id }}">{{ user }}</a></td>
-            <td>{{ item }}</td>
-            <td>{{ item.category }}</td>
-          </tr>
-        
+      
+        <tr>
+          <td><a href="{% url 'user-items' user.id %}">{{ user }}</a></td>
+          <td>{{ item }}</td>
+          <td>{{ item.category }}</td>
+        </tr>
+      
       {% endfor %}
     </tbody>
   </table>
