@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RunPython(
-            code=barter.migrations.0005_auto_20211002_1633.create_through_relations,
+            code=create_through_relations,
             reverse_code=django.db.migrations.operations.special.RunPython.noop,
         ),
         migrations.RemoveField(
