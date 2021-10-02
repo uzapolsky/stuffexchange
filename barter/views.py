@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views import View
 
 from .forms import AddItemFullForm, CategoryForm
-from .models import Item, Photo
+from .models import Item, Photo, Wish
 
 
 class LoginUserView(LoginView):
@@ -128,3 +128,9 @@ def offer_exchange(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     item.wished_by.add(request.user.id)
     return redirect('items')
+
+
+def delete_offer(request, item_id, wisher_id):
+    wish = get_object_or_404(Wish, item=item_id, wisher=wisher_id)
+    wish.delete()
+    return redirect('offers')

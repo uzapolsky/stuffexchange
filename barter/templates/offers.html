@@ -23,6 +23,7 @@
         <th data-field="domain" data-sortable="true">Что хочет</th>
         <th data-field="total" data-sortable="true">Категория</th>
         <th data-sortable="true">Когда пожелали</th>
+        <th>Удаление</th>
       </tr>
     </thead>
     <tbody>
@@ -33,6 +34,11 @@
           <td>{{ item }}</td>
           <td>{{ item.category }}</td>
           <td>{{ wish_time }}</td>
+          <td>
+            <div class="col text-center" >
+              <a class="btn btn-primary" href="{% url 'delete_offer' item.id proposer.id %}" style="z-index:3; position:relative;">Удалить просьбу</a>
+            </div>
+          </td>
         </tr>
       
       {% endfor %}
