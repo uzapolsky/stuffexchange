@@ -10,8 +10,21 @@
 
 {% block content %}
 
+<div class="container mb-4">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto text-center">
+        {% if site_user.id == user.id %}
+          <h5>Мои вещи</h5>
+        {% else %}
+          <h5>Вещи {{ site_user.username }}</h5>
+          <h6 class="text-muted">{{ site_user.email }}</h5>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
 <div class="container">
-  {% if user_id == user.id %}
+  {% if site_user.id == user.id %}
     {% block usercontent %}{% endblock %}
   {% endif %}
   <div class="dropdown text-center outline-primary mb-2">

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
@@ -101,7 +102,7 @@ def show_all_items(request):
 def show_user_items(request, user_id):
     items = Item.objects.filter(owner=user_id).select_related('category')
     context = handle_category_form(request, items)
-    context['user_id'] = user_id
+    context['site_user'] = get_object_or_404(User, pk=user_id)
     return render(request, 'user-items.html', context=context)
 
 

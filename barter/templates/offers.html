@@ -28,7 +28,6 @@
     </thead>
     <tbody>
       {% for item, proposer, wish_time in wanted_items %}
-      
         <tr style="transform: rotate(0);">
           <td><a href="{% url 'user-items' proposer.id %}" class="stretched-link text-dark text-decoration-none">{{ proposer }}</a></td>
           <td>{{ item }}</td>
@@ -36,14 +35,11 @@
           <td>{{ wish_time }}</td>
           <td>
             <div class="col text-center" >
-              <a class="btn btn-primary" href="{% url 'delete_offer' item.id proposer.id %}" style="z-index:3; position:relative;">Удалить просьбу</a>
+              <a class="btn btn-primary" href="{% url 'delete_offer' item.id proposer.id %}" style="z-index:3; position:relative;">Удалить</a>
             </div>
           </td>
         </tr>
-      
       {% endfor %}
     </tbody>
   </table>
-
-
 {% endblock %}
