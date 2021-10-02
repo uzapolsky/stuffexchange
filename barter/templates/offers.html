@@ -2,16 +2,40 @@
 
 {% load static %}
 
-{% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
 {% block title %}Мне предлагают{% endblock %}
+
+{% block scripts %}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
+{% endblock %}
+
 {% block content %}
-{% for item, user in wanted_items %}
-  {{ user }}
-  {{ item }}
-  {{ item.category }}
-</br>
-{% endfor %}
+  <table 
+    id="table" 
+    class="table table-striped table-hover" 
+    data-toggle="table"
+    >
+    <thead>
+      <tr>
+        <th data-sortable="true">Пользователь</th>
+        <th data-field="domain" data-sortable="true">Что хочет</th>
+        <th data-field="total"data-sortable="true">Категория</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item, user in wanted_items %}
+        
+          <tr>
+            <td><a href="/user/{{ user.id }}">{{ user }}</a></td>
+            <td>{{ item }}</td>
+            <td>{{ item.category }}</td>
+          </tr>
+        
+      {% endfor %}
+    </tbody>
+  </table>
+
+
 {% endblock %}
