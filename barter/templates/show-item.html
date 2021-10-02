@@ -8,51 +8,58 @@
 
 {% block title %}Имя предмета{% endblock %}
 {% block style %}
-<style>
-html, body {
-    height: 100%;
-}
-.container {
-    height: 100%;
-}
 
-</style>
 {% endblock %}
 {% block content %}
-<div class="container-fluid h-100 d-flex flex-column justify-content-center">
-  <div class="row mb-3">
-    <div class="col-md-5 align-items-center text-center">
-      <small class="text-muted">{{ item.category }}</small>
-      <h5>{{ item.name }}</h5>
-    </div>
-  </div>
-  <div class="card border-0">
-    <div class="row mb-3">
-      <div class="col-md-5 align-items-center">
-        <img src="{{ item.photos.first.image.url }}" class="card-img-top" alt="предмет">
-      </div>
-      <div class="col-md-7 text-center">
-        <div class="card-body">
-          <h5 class="card-title">Описание</h5>
-          <p class="card-text">{{ item.description }}</p>
+
+  <div class="container-fluid pb-3 text-center">
+    <div class="d-md justify-content-between">
+      <div class = "row justify-content-center">
+        <div class = "col-md-6 align-self-center" style="max-width: 600px;>
+          <p class="fs-6 text-muted">{{ item.category }}</p>
+          <p class="fs-2">{{ item.name }}</p>
+          
+          <div class="container">
+            <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+              <ol class = "carousel-indicators">
+                {% for _ in item.photos.all %}
+                  <button type="button" 
+                  data-bs-target="#carouselControls"
+                  class="m-2 {% if forloop.first %}active{% endif %}"
+                  data-bs-slide-to="{{ forloop.counter0 }}">
+                  </button>
+                {% endfor %}
+              </ol>
+              <div class="carousel-inner">
+                {% for photo in item.photos.all %}
+                  <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <img src="{{ photo.image.url }}" class="img-fluid rounded" style="max-height: 400px; width:auto;">
+                  </div>
+                {% endfor %}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class = "col-md-6 align-self-center">  
+          <div class="card my-2">
+            <div class="card-body" style="max-height: 500px;">
+              <p class="fs-3">Описание</p>
+              <p class="fs-6">{{ item.description }}</p>
+            </div>
+          </div> 
         </div>
       </div>
-    </div>
+    </div>  
   </div>
-  <div class="row ">
-    <div class="col-md-5 align-items-left text-center ">
-      <div class="card-group ">
-        {% for photo in item.photos.all %}
-          <div class="card p-3 m-2 border-0">
-            <img src="{{ photo.image.url }}" style="max-height: 150px; display: block;" alt="предмет">
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col text-center">
-      <button class="btn btn-secondary">Предложить обмен</button>
-    </div>
-  </div>
+<div class="col text-center">
+  <button class="btn btn-primary">Предложить обмен</button>
+</div>
 {% endblock %}
