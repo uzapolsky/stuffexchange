@@ -7,6 +7,7 @@
 {% block scripts %}
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
   <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
 {% endblock %}
@@ -27,8 +28,8 @@
     <tbody>
       {% for item, user in wanted_items %}
       
-        <tr>
-          <td><a href="{% url 'user-items' user.id %}">{{ user }}</a></td>
+        <tr style="transform: rotate(0);">
+          <td><a href="{% url 'user-items' user.id %}" class="stretched-link text-dark text-decoration-none">{{ user }}</a></td>
           <td>{{ item }}</td>
           <td>{{ item.category }}</td>
         </tr>
