@@ -11,7 +11,9 @@
 {% block content %}
 
 <div class="container">
-  {% block usercontent %}{% endblock %}
+  {% if user_id == user.id %}
+    {% block usercontent %}{% endblock %}
+  {% endif %}
   <div class="dropdown text-center outline-primary mb-2">
     <form method="post">
       {% csrf_token %}

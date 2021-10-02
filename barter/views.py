@@ -98,9 +98,10 @@ def show_all_items(request):
     return render(request, 'items.html', context=context)
 
 
-def show_my_items(request, user_id):
+def show_user_items(request, user_id):
     items = Item.objects.filter(owner=user_id).select_related('category')
     context = handle_category_form(request, items)
+    context['user_id'] = user_id
     return render(request, 'user-items.html', context=context)
 
 

@@ -11,7 +11,7 @@ from . import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('items/', views.show_all_items, name='items'),
-    path('user/<int:user_id>', views.show_my_items, name='user-items'),
+    path('user/<int:user_id>', views.show_user_items, name='user-items'),
     path('', views.index, name='home'),
     path('login/', views.LoginUserView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
