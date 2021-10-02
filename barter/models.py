@@ -66,13 +66,13 @@ class Wish(models.Model):
     item = models.ForeignKey(
         Item,
         verbose_name='предмет',
-        related_name='item',
+        related_name='wish',
         on_delete=models.CASCADE,
     )
     wisher = models.ForeignKey(
         User,
         verbose_name='желающий',
-        related_name='wisher',
+        related_name='wish',
         on_delete=models.CASCADE,
     )
     wished_at = models.DateTimeField(

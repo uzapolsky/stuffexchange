@@ -21,16 +21,18 @@
       <tr>
         <th data-sortable="true">Пользователь</th>
         <th data-field="domain" data-sortable="true">Что хочет</th>
-        <th data-field="total"data-sortable="true">Категория</th>
+        <th data-field="total" data-sortable="true">Категория</th>
+        <th>Когда пожелали</th>
       </tr>
     </thead>
     <tbody>
-      {% for item, proposer in wanted_items %}
+      {% for item, proposer, wish_time in wanted_items %}
       
         <tr style="transform: rotate(0);">
           <td><a href="{% url 'user-items' proposer.id %}" class="stretched-link text-dark text-decoration-none">{{ proposer }}</a></td>
           <td>{{ item }}</td>
           <td>{{ item.category }}</td>
+          <td>{{ wish_time }}</td>
         </tr>
       
       {% endfor %}

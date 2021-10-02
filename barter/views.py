@@ -115,10 +115,11 @@ def show_offers(request):
     items = Item.objects.filter(owner=user).prefetch_related('wished_by', 'category')
     item_users = [(item, item.wished_by.all()) for item in items if item.wished_by.all().exists()]
 
-    wanted_items = list()
+    wanted_items = []
     for item, users in item_users:
         for user in users:
-            wanted_items.append((item, user))
+            wish_time = item.wish.first().wished_at
+            wanted_items.append((item, user, wish_time))
 
     return render(request, 'offers.html', context={'wanted_items': wanted_items})
 
