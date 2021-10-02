@@ -102,7 +102,7 @@ def show_all_items(request):
 
 def show_my_items(request):
     user = request.user.id
-    items = Item.objects.filter(owner=user)
+    items = Item.objects.filter(owner=user).select_related('category')
     context = handle_category_form(request, items)
     return render(request, 'user-items.html', context=context)
 
@@ -123,3 +123,7 @@ def show_offers(request):
             wanted_items.append((item, user))
 
     return render(request, 'offers.html', context={'wanted_items': wanted_items})
+
+
+def offer_exchange(request, item_id):
+    return render(request, 'exchange.html')

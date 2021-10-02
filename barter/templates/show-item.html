@@ -15,7 +15,7 @@
   <div class="container-fluid pb-3 text-center">
     <div class="d-md justify-content-between">
       <div class = "row justify-content-center">
-        <div class = "col-md-6 align-self-center" style="max-width: 600px;>
+        <div class = "col-md-6 align-self-center" style="max-width: 600px;">
           <p class="fs-6 text-muted">{{ item.category }}</p>
           <p class="fs-2">{{ item.name }}</p>
           
@@ -60,6 +60,6 @@
     </div>  
   </div>
 <div class="col text-center">
-  <button class="btn btn-primary">Предложить обмен</button>
+  <a class="btn btn-primary" href="{% url 'exchange' item.id %}">Предложить обмен</a>
 </div>
 {% endblock %}

@@ -19,6 +19,7 @@ urlpatterns = [
     path('add-item/', views.AddItemView.as_view(), name='add-item'),
     path('item/<int:item_id>', views.show_item, name='show_item'),
     path('offers/', views.show_offers, name='offers'),
+    path('exchange/<int:item_id>', views.offer_exchange, name='exchange'),
 ]
 
 if settings.DEBUG:
