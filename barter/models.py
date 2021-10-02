@@ -46,6 +46,7 @@ class Item(models.Model):
         verbose_name='нужен',
         related_name='wished_items',
         blank=True,
+        through='Wish',
     )
     added_at = models.DateTimeField(
         'добавлен в',
@@ -59,6 +60,26 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Wish(models.Model):
+    item = models.ForeignKey(
+        Item,
+        verbose_name='предмет',
+        related_name='item',
+        on_delete=models.CASCADE,
+    )
+    wisher = models.ForeignKey(
+        User,
+        verbose_name='желающий',
+        related_name='wisher',
+        on_delete=models.CASCADE,
+    )
+    wished_at = models.DateTimeField(
+        'пожелали в',
+        default=timezone.now,
+        db_index=True,
+    )
 
 
 class Photo(models.Model):
