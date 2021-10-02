@@ -1,3 +1,5 @@
+from itertools import zip_longest
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
@@ -54,10 +56,10 @@ class AddItemView(View):
                 owner=user,
                 name=name,
                 description=description,
-                category=category
+                category=category,
             )
             for image in images:
-                Photo.objects.create(item=item,image=image)
+                Photo.objects.create(item=item, image=image)
             return redirect('user-items')
         else:
             print("Form invalid")
@@ -91,7 +93,9 @@ def pagination(request, items, items_per_page=6):
 
 
 def show_all_items(request):
-    items = Item.objects.select_related('category').order_by('name')
+    user = request.user.id
+    items = Item.objects.select_related('category').order_by('name').exclude(owner=user)
+
     context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
 
@@ -106,3 +110,16 @@ def show_my_items(request):
 def show_item(request, item_id):
     item = Item.objects.get(id=item_id)
     return render(request, 'show-item.html', context={'item': item})
+
+
+def show_offers(request):
+    user = request.user.id
+    items = Item.objects.filter(owner=user).prefetch_related('wished_by', 'category')
+    item_users = [(item, item.wished_by.all()) for item in items if item.wished_by.all().exists()]
+    
+    wanted_items = list()
+    for item, users in item_users:
+        for user in users:
+            wanted_items.append((item, user))
+
+    return render(request, 'offers.html', context={'wanted_items': wanted_items})

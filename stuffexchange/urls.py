@@ -7,6 +7,7 @@ from django.urls import include, path
 
 from . import settings
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('items/', views.show_all_items, name='items'),
@@ -17,6 +18,7 @@ urlpatterns = [
     path('signup/', views.SignupUserView.as_view(), name='signup'),
     path('add-item/', views.AddItemView.as_view(), name='add-item'),
     path('item/<int:item_id>', views.show_item, name='show_item'),
+    path('offers/', views.show_offers, name='offers'),
 ]
 
 if settings.DEBUG:

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block title %}Мне предлагают{% endblock %}
+{% block content %}
+{% for item, user in wanted_items %}
+  {{ user }}
+  {{ item }}
+  {{ item.category }}
+</br>
+{% endfor %}
+{% endblock %}
