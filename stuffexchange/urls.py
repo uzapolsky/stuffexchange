@@ -22,6 +22,7 @@ urlpatterns = [
     path('offers/', views.show_offers, name='offers'),
     path('exchange/<int:item_id>', views.offer_exchange, name='exchange'),
     path('delete_wish/<int:item_id>/<int:wisher_id>', views.delete_offer, name='delete_offer'),
+    path('delete_item/<int:item_id>', views.delete_item, name='delete_item'),
 ]
 
 if settings.DEBUG:

@@ -135,3 +135,9 @@ def delete_offer(request, item_id, wisher_id):
     wish = get_object_or_404(Wish, item=item_id, wisher=wisher_id)
     wish.delete()
     return redirect('offers')
+
+
+def delete_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    item.delete()
+    return redirect('user-items', request.user.id)
