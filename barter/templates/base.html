@@ -9,8 +9,35 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{% static 'favicon.svg' %}">
     {% block scripts %}{% endblock %}
+    {% block style %}
+    <style type="text/css">
+        .message {
+            border-radius: 10px;
+            box-shadow: 3px 3px 4px 0px rgba(50, 50, 50, 0.75);
+            color: white;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            text-align: center;
+            width: 80%;
+        }
+
+        .message.success {
+            background-color: skyblue;
+        }
+
+        .message.error {
+            background-color: red;
+        }
+    </style>
+    {% endblock %}
 </head>
-{% block style %}{% endblock %}
+
+
+
 
 
 <body class="d-flex flex-column min-vh-100">
@@ -75,7 +102,18 @@
             </div>
         </div>
     </nav>
-        
+    <!-- Insert the following where you'd like the messages to appear in your base template. -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p class="message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <script>
+        $('.message').hide().fadeIn(500).delay(2000).fadeOut(500);  
+    </script>
+            
     <div class="container py-5">
         {% block content %}{% endblock %}
     </div>
