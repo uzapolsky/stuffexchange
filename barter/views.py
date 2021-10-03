@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
@@ -24,14 +25,14 @@ class SignupUserView(View):
 
     def post(self, request):
         form = UserCreationWithEmailForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('home')
-        return render(request, 'registration/signup.html', {'form': form})
+        if not form.is_valid():
+            return render(request, 'registration/signup.html', {'form': form})
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect('home')
 
 
 class AddItemView(View):
@@ -42,26 +43,25 @@ class AddItemView(View):
 
     def post(self, request):
         form = AddItemFullForm(request.POST, request.FILES or None)
-        print(form.errors)
         images = request.FILES.getlist('images')
-        print(images, type(images))
-        if form.is_valid():
-            user = request.user
-            name = form.cleaned_data['name']
-            description = form.cleaned_data['description']
-            category = form.cleaned_data['category']
-            item = Item.objects.create(
-                owner=user,
-                name=name,
-                description=description,
-                category=category,
-            )
-            for image in images:
-                Photo.objects.create(item=item, image=image)
-            return redirect('user-items', user.id)
-        else:
-            print("Form invalid")
+
+        if not form.is_valid():
+            messages.error(request, form.errors.get('description', 'Ошибка'))
             return redirect('add-item')
+        user = request.user
+        name = form.cleaned_data['name']
+        description = form.cleaned_data['description']
+        category = form.cleaned_data['category']
+        item = Item.objects.create(
+            owner=user,
+            name=name,
+            description=description,
+            category=category,
+        )
+        for image in images:
+            Photo.objects.create(item=item, image=image)
+        messages.success(request, f'{item.name} успешно добавлен')
+        return redirect('user-items', user.id)
 
 
 def index(request):
@@ -72,6 +72,7 @@ def handle_category_form(request, items):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
+            messages.errors.get('description', 'Ошибка')
             context = {'items': items, 'form': form}
             return render(request, 'items.html')
         if int(category_id := request.POST.get('categories')):
@@ -127,16 +128,19 @@ def show_offers(request):
 def offer_exchange(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     item.wished_by.add(request.user.id)
+    messages.success(request, f'Уведомление о желании об {item.name} отправлено')
     return redirect('items')
 
 
 def delete_offer(request, item_id, wisher_id):
     wish = get_object_or_404(Wish, item=item_id, wisher=wisher_id)
     wish.delete()
+    messages.success(request, 'Удаление успешно')
     return redirect('offers')
 
 
 def delete_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     item.delete()
+    messages.success(request, 'Предмет удален')
     return redirect('user-items', request.user.id)

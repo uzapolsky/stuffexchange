@@ -102,17 +102,19 @@
             </div>
         </div>
     </nav>
-    <!-- Insert the following where you'd like the messages to appear in your base template. -->
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-            <p class="message {{ message.tags }}">{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    <script>
-        $('.message').hide().fadeIn(500).delay(2000).fadeOut(500);  
-    </script>
+
+    {% block messages %}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <p class="message {{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <script>
+            $('.message').hide().fadeIn(500).delay(2000).fadeOut(500);  
+        </script>
+    {% endblock %}
             
     <div class="container py-5">
         {% block content %}{% endblock %}
