@@ -72,9 +72,9 @@ def handle_category_form(request, items):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if not form.is_valid():
-            messages.errors.get('description', 'Ошибка')
+            messages.error(request, form.errors.get('description', 'Ошибка'))
             context = {'items': items, 'form': form}
-            return render(request, 'items.html')
+            return render(request, 'items.html', context=context)
         if int(category_id := request.POST.get('categories')):
             items = items.filter(category=category_id)
     else:
