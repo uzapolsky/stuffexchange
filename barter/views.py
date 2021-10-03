@@ -93,14 +93,20 @@ def pagination(request, items, items_per_page=6):
 
 def show_all_items(request):
     user = request.user.id
-    items = Item.objects.select_related('category').order_by('name').exclude(owner=user)
+    items = (
+        Item.objects
+        .select_related('category')
+        .order_by('name')
+        .exclude(owner=user)
+        .order_by('id')
+    )
 
     context = handle_category_form(request, items)
     return render(request, 'items.html', context=context)
 
 
 def show_user_items(request, user_id):
-    items = Item.objects.filter(owner=user_id).select_related('category')
+    items = Item.objects.filter(owner=user_id).select_related('category').order_by('-id')
     context = handle_category_form(request, items)
     context['site_user'] = get_object_or_404(User, pk=user_id)
     return render(request, 'user-items.html', context=context)
