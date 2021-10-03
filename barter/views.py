@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
@@ -8,7 +7,7 @@ from django.template.context_processors import csrf
 from django.urls import reverse
 from django.views import View
 
-from .forms import AddItemFullForm, CategoryForm
+from .forms import AddItemFullForm, CategoryForm, UserCreationWithEmailForm
 from .models import Item, Photo, Wish
 
 
@@ -20,11 +19,11 @@ class LoginUserView(LoginView):
 class SignupUserView(View):
 
     def get(self, request):
-        form = UserCreationForm()
+        form = UserCreationWithEmailForm()
         return render(request, 'registration/signup.html', {'form': form})
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = UserCreationWithEmailForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')

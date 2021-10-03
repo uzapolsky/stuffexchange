@@ -1,6 +1,8 @@
 from django import forms
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm, FileField, ClearableFileInput
+
 from .models import Item, Category
 
 
@@ -18,7 +20,7 @@ class AddItemFullForm(AddItemForm):
 
 
 class CategoryForm(forms.Form):
-    category_choices = [(0, 'Категории'), (0, 'Все категории')]
+    category_choices = [(0, 'категории'), (0, 'все категории')]
     category_choices.extend(Category.objects.values_list('id', 'name'))
     category = forms.ChoiceField(
         label='days',
@@ -26,3 +28,18 @@ class CategoryForm(forms.Form):
         required=False,
         initial='0',
     )
+
+
+class UserCreationWithEmailForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def save(self, commit=True):
+        user = super(UserCreationWithEmailForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user

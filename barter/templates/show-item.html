@@ -63,7 +63,7 @@
     {% if item.owner.id != user.id %}
       <a class="btn btn-primary" href="{% url 'exchange' item.id %}">Предложить обмен</a>
     {% else %}
-      <a class="btn btn-primary" href="{% url 'delete_item' item.id %}">Удалить предмет</a>
+      <a class="btn btn-danger" href="{% url 'delete_item' item.id %}">Удалить предмет</a>
     {% endif %}
   </div>
 {% endblock %}
