@@ -34,7 +34,7 @@ class UserCreationWithEmailForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'contacts', 'password1', 'password2')
+        fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'contacts')
 
     def save(self, commit=True):
         user = super(UserCreationWithEmailForm, self).save(commit=False)
@@ -46,9 +46,27 @@ class UserCreationWithEmailForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         self.fields['username'].label = "Юзернейм"
-        self.fields['username'].help_text = "Обязательное поле. Только английские буквы, цифры и символы @/./+/-/_"
+        self.fields['username'].widget.attrs.update({'placeholder':''})
+        self.fields['username'].help_text = "Обязательное поле. Только английские \
+                                             буквы, цифры и символы @/./+/-/_"
+
+        self.fields['first_name'].label = "Имя"
+        self.fields['first_name'].widget.attrs.update({'placeholder':''})
+
+        self.fields['last_name'].label = "Фамилия"
+        self.fields['last_name'].widget.attrs.update({'placeholder':''})
+
         self.fields['email'].label = "Почта"
+        self.fields['email'].widget.attrs.update({'placeholder':''})
+
         self.fields['password1'].label = "Пароль"
-        self.fields['password1'].help_text = "8 символов, не только цифры, не должен совпадать с другими полями"
+        self.fields['password1'].widget.attrs.update({'placeholder':''})
+        self.fields['password1'].help_text = "Обязательное поле. От восьми символов, не только \
+                                              цифры, не должен совпадать с другими полями"
+        
         self.fields['password2'].label = "Подтверждение пароля"
-        self.fields['password2'].help_text = "Должен точно совпадать с паролем"
+        self.fields['password2'].widget.attrs.update({'placeholder':''})
+        self.fields['password2'].help_text = "Обязательное поле"
+
+        self.fields['contacts'].label = "Контакты для обмена"
+        self.fields['contacts'].widget.attrs.update({'placeholder':''})

@@ -11,7 +11,7 @@
         {% bootstrap_messages %}
         <form action="{% url 'signup' %}" method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
+            {% bootstrap_form form placeholder='fdg'%}
             {% bootstrap_button button_type="submit" content="OK" %}
         </form>
     </div>
