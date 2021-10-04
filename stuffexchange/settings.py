@@ -65,7 +65,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stuffexchange.wsgi.application'
 
-'default' : dj_database_url.config(conn_max_age=600, ssl_require=False)
+DATABASES = {'default' : dj_database_url.config(conn_max_age=600, ssl_require=False)}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

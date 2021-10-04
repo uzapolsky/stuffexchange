@@ -5,6 +5,7 @@ from django.db import migrations, models
 import django.db.migrations.operations.special
 import django.db.models.deletion
 import django.utils.timezone
+import datetime
 
 
 # Functions from the following migrations need manual copying.
