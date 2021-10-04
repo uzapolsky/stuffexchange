@@ -24,7 +24,7 @@
             data-bs-toggle="tooltip"
             data-bs-placement="bottom"
             data-bs-original-title="{{ wish_items_hover }}">Вещи пользователя {{ site_user.username }}
-                {% if site_user.first_name %} ({{ site_user.first_name }} {{ site_user.second_name }}){% endif %}
+                {% if site_user.first_name %} ({{ site_user.first_name }} {{ site_user.last_name }}){% endif %}
           </p>
           {% if site_user.email %}
             <p class="fs-6 text-muted">{{ 'e-mail: '|add:site_user.email }}</p>
