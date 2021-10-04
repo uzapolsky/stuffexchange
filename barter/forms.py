@@ -14,10 +14,18 @@ class AddItemForm(ModelForm):
 
 class AddItemFullForm(AddItemForm):
     images = FileField(label= 'Изображения', widget=ClearableFileInput(attrs={'multiple': True,}))
+    
     contacts = CharField(required=False, label= 'Как с вами связаться?', widget=Textarea(attrs={
-                            'placeholder': 'Заполните, только если хотите сменить контакты для связи'
+                            'placeholder': 'Введите контакты для связи'
                             }
                         ))
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['contacts'].widget.attrs.update({'placeholder': 
+            'Заполните, только если хотите '\
+            f'сменить контакты для связи. Текущие контакты: {user.contacts}'
+            })
 
     class Meta(AddItemForm.Meta):
 

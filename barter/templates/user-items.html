@@ -16,7 +16,7 @@
         {% if site_user.id == user.id %}
           <p class="fs-5">Мои вещи</p>
         {% else %}
-          <p class="fs-5">Вещи пользователя {{ site_user.username }}</p>
+          <p class="fs-5">Вещи пользователя {{ site_user.username }}{% if site_user.first_name %} ({{ site_user.first_name }} {{ site_user.second_name }}){% endif %}</p>
           {% if site_user.email %}
             <p class="fs-6 text-muted">{{ 'e-mail: '|add:site_user.email }}</p>
           {% endif %}

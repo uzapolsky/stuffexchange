@@ -37,7 +37,7 @@ class SignupUserView(View):
 class AddItemView(View):
 
     def get(self, request):
-        form = AddItemFullForm()
+        form = AddItemFullForm(request.user)
         return render(request, 'add-item.html', {'form': form})
 
     def post(self, request):
@@ -111,7 +111,9 @@ def show_all_items(request):
 def show_user_items(request, user_id):
     items = Item.objects.filter(owner=user_id).select_related('category').order_by('-id')
     context = handle_category_form(request, items)
-    context['site_user'] = get_object_or_404(User, pk=user_id)
+    user = request.user
+    site_user = get_object_or_404(User, pk=user_id)
+    context['site_user'] = site_user
     return render(request, 'user-items.html', context=context)
 
 
