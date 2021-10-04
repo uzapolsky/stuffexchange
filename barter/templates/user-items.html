@@ -8,8 +8,26 @@
 
 {% block title %}{% if site_user.id == user.id %}Хочу обменять{% else %}Хочет обменять{% endif %}{% endblock %}
 
+
 {% block usercontent %}
-    <div class="container mb-4">
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto text-center">
+        {% if site_user.id == user.id %}
+          <p class="fs-5">Мои вещи</p>
+        {% else %}
+          <p class="fs-5">Вещи пользователя {{ site_user.username }}</p>
+          {% if site_user.email %}
+            <p class="fs-6 text-muted">{{ 'e-mail: '|add:site_user.email }}</p>
+          {% endif %}
+          <p class="fs-6 text-muted">{{' '|add:site_user.contacts}}</p>
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+  {% if site_user.id == user.id %}
+        <div class="container mb-3">
         <div class="row justify-content-md-center">
             <div class="col-md-auto">
                 <a href="{% url 'add-item'  %}">
@@ -18,4 +36,6 @@
             </div>
         </div>
     </div>
+  {% endif %}
+
 {% endblock %}

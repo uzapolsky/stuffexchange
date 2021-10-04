@@ -101,6 +101,7 @@ def show_all_items(request):
     )
 
     context = handle_category_form(request, items)
+    context['site_user'] = ''
     return render(request, 'items.html', context=context)
 
 
