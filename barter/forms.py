@@ -34,7 +34,7 @@ class UserCreationWithEmailForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'contacts', 'password1', 'password2')
 
     def save(self, commit=True):
         user = super(UserCreationWithEmailForm, self).save(commit=False)
@@ -42,3 +42,13 @@ class UserCreationWithEmailForm(UserCreationForm):
         if commit:
             user.save()
         return user
+    
+    def __init__(self, *args, **kwargs):
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].label = "Юзернейм"
+        self.fields['username'].help_text = "Обязательное поле. Только английские буквы, цифры и символы @/./+/-/_"
+        self.fields['email'].label = "Почта"
+        self.fields['password1'].label = "Пароль"
+        self.fields['password1'].help_text = "8 символов, не только цифры, не должен совпадать с другими полями"
+        self.fields['password2'].label = "Подтверждение пароля"
+        self.fields['password2'].help_text = "Должен точно совпадать с паролем"

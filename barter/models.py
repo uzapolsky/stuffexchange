@@ -5,7 +5,12 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
-    pass
+
+    contacts = models.TextField(
+        'контакты',
+        blank=True,
+        validators=[MaxLengthValidator(200)],
+    )
 
 
 class Category(models.Model):
