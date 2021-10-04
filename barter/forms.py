@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.forms import ModelForm, FileField, ClearableFileInput
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.forms import (CharField, ClearableFileInput, FileField, ModelForm,
+                          Textarea)
 
-from .models import Item, Category, User
+from .models import Category, Item, User
 
 
 class AddItemForm(ModelForm):
@@ -12,10 +13,15 @@ class AddItemForm(ModelForm):
 
 
 class AddItemFullForm(AddItemForm):
-    images = FileField(widget=ClearableFileInput(attrs={'multiple': True}))
+    images = FileField(label= 'Изображения', widget=ClearableFileInput(attrs={'multiple': True,}))
+    contacts = CharField(required=False, label= 'Как с вами связаться?', widget=Textarea(attrs={
+                            'placeholder': 'Заполните, только если хотите сменить контакты для связи'
+                            }
+                        ))
 
     class Meta(AddItemForm.Meta):
-        fields = AddItemForm.Meta.fields + ['images']
+
+        fields = AddItemForm.Meta.fields + ['images', 'contacts']
 
 
 class CategoryForm(forms.Form):

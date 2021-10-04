@@ -51,6 +51,8 @@ class AddItemView(View):
         name = form.cleaned_data['name']
         description = form.cleaned_data['description']
         category = form.cleaned_data['category']
+        contacts= form.cleaned_data['contacts']
+        print(contacts)
         item = Item.objects.create(
             owner=user,
             name=name,

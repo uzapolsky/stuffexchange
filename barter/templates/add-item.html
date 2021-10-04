@@ -15,12 +15,12 @@
 {% block content %}
 
 <div class="d-flex justify-content-center"> 
-    <div class="col-md-5">
+    <div class="col-ld-5">
         {% bootstrap_messages %}
         <form action="{% url 'add-item' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
-            {% bootstrap_form form %}
+            {% bootstrap_form form required_css_class="false"%}
 
             {% bootstrap_button button_type="submit" content="Добавить вещь" %}
 
