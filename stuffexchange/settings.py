@@ -114,6 +114,7 @@ if env.bool('CLOUDINARY', False):
     }
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+AUTH_USER_MODEL = 'barter.User'
 
 django_heroku.settings(locals(), databases=False)
 

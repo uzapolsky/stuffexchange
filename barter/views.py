@@ -1,6 +1,5 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
@@ -9,7 +8,7 @@ from django.urls import reverse
 from django.views import View
 
 from .forms import AddItemFullForm, CategoryForm, UserCreationWithEmailForm
-from .models import Item, Photo, Wish
+from .models import Item, Photo, Wish, User
 
 
 class LoginUserView(LoginView):

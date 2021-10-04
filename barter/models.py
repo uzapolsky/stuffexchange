@@ -1,7 +1,11 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.utils import timezone
+
+
+class User(AbstractUser):
+    pass
 
 
 class Category(models.Model):
