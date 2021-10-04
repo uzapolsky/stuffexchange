@@ -41,7 +41,7 @@ class AddItemView(View):
         return render(request, 'add-item.html', {'form': form})
 
     def post(self, request):
-        form = AddItemFullForm(request.POST, request.FILES or None)
+        form = AddItemFullForm(request.user, request.POST, request.FILES or None)
         images = request.FILES.getlist('images')
 
         if not form.is_valid():
