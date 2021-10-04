@@ -6,6 +6,12 @@ from django.forms import (CharField, ClearableFileInput, FileField, ModelForm,
 from .models import Category, Item, User
 
 
+def create_category_choices():
+    category_choices = [(0, 'Категории'),(0, 'Все категории')]
+    category_choices.extend(Category.objects.values_list('id', 'name').order_by('name'))
+    return category_choices
+
+
 class AddItemForm(ModelForm):
     class Meta:
         model = Item
@@ -33,11 +39,9 @@ class AddItemFullForm(AddItemForm):
 
 
 class CategoryForm(forms.Form):
-    category_choices = [(0, 'Категории'),(0, 'Все категории')]
-    category_choices.extend(Category.objects.values_list('id', 'name').order_by('name'))
     category = forms.ChoiceField(
         label='days',
-        choices=category_choices,
+        choices=create_category_choices,
         required=False,
         initial='0',
     )
