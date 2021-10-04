@@ -26,7 +26,7 @@
   </div>
   <div class="row row-cols-3">
     {% for item in items %}
-      <div class="col">
+      <div class="col col-6 col-md-4">
         <div class="card p-3 m-2">
           <a href="{% url 'show_item' item.id %}" class="text-decoration-none">
             <img class="img-fluid img-center" style="width: auto; height: 200px; margin-left: auto; margin-right: auto; display: block;" src="{{ item.photos.first.image.url }}" alt="предмет">

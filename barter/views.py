@@ -113,7 +113,10 @@ def show_user_items(request, user_id):
     context = handle_category_form(request, items)
     user = request.user
     site_user = get_object_or_404(User, pk=user_id)
+    wish_items = Wish.objects.filter(item__owner=user, wisher=site_user)
+    wish_items_hover = f'Этот пользователь хочет обменять предметы: {" ".join([item.item.name for item in wish_items])}'
     context['site_user'] = site_user
+    context['wish_items_hover'] = wish_items_hover
     return render(request, 'user-items.html', context=context)
 
 

@@ -8,15 +8,24 @@
 
 {% block title %}{% if site_user.id == user.id %}Хочу обменять{% else %}Хочет обменять{% endif %}{% endblock %}
 
+{% block scripts %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js">
+{% endblock %}
 
 {% block usercontent %}
+
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-md-auto text-center">
         {% if site_user.id == user.id %}
           <p class="fs-5">Мои вещи</p>
         {% else %}
-          <p class="fs-5">Вещи пользователя {{ site_user.username }}{% if site_user.first_name %} ({{ site_user.first_name }} {{ site_user.second_name }}){% endif %}</p>
+          <p class="fs-5" 
+            data-bs-toggle="tooltip"
+            data-bs-placement="bottom"
+            data-bs-original-title="{{ wish_items_hover }}">Вещи пользователя {{ site_user.username }}
+                {% if site_user.first_name %} ({{ site_user.first_name }} {{ site_user.second_name }}){% endif %}
+          </p>
           {% if site_user.email %}
             <p class="fs-6 text-muted">{{ 'e-mail: '|add:site_user.email }}</p>
           {% endif %}
@@ -37,5 +46,10 @@
         </div>
     </div>
   {% endif %}
-
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+</script>
 {% endblock %}
