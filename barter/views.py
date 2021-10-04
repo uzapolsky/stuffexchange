@@ -51,8 +51,9 @@ class AddItemView(View):
         name = form.cleaned_data['name']
         description = form.cleaned_data['description']
         category = form.cleaned_data['category']
-        contacts= form.cleaned_data['contacts']
-        print(contacts)
+        contacts = form.cleaned_data['contacts']
+        if contacts:
+            User.objects.filter(pk=user.id).update(contacts=contacts)
         item = Item.objects.create(
             owner=user,
             name=name,
