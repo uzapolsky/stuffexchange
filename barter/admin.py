@@ -45,9 +45,9 @@ class ItemAdmin(ImportExportModelAdmin):
     resource_class = ItemResource
 
 
-@admin.register(Category)
+'''@admin.register(Category)
 class CategoryAdmin(ImportExportModelAdmin):
-    resource_class = CategoryResource
+    resource_class = CategoryResource'''
 
 
 @admin.register(Wish)
