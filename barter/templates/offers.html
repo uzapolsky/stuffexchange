@@ -12,34 +12,39 @@
 {% endblock %}
 
 {% block content %}
-  <table 
-    id="table" 
-    class="table table-striped table-hover" 
-    data-toggle="table"
-    >
-    <thead>
-      <tr>
-        <th data-sortable="true">Пользователь</th>
-        <th data-field="domain" data-sortable="true">Что хочет</th>
-        <th data-field="total" data-sortable="true">Категория</th>
-        <th data-sortable="true">Когда пожелали</th>
-        <th>Удаление</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item, proposer, wish_time in wanted_items %}
-        <tr style="transform: rotate(0);">
-          <td><a href="{% url 'user-items' proposer.id %}" class="stretched-link text-dark text-decoration-none">{{ proposer }}</a></td>
-          <td>{{ item }}</td>
-          <td>{{ item.category }}</td>
-          <td>{{ wish_time }}</td>
-          <td>
-            <div class="col text-center" >
-              <a class="btn btn-danger" href="{% url 'delete_offer' item.id proposer.id %}" style="z-index:3; position:relative;">Удалить</a>
-            </div>
-          </td>
+  <style>
+    th{font-weight: normal;}
+  </style>
+  <div class="container col-lg-10">
+    <table 
+      id="table" 
+      class="table table-striped table-hover fs-6 fw-light" 
+      data-toggle="table"
+      >
+      <thead>
+        <tr class="fs-5">
+          <th data-sortable="true">Пользователь</th>
+          <th data-field="domain" data-sortable="true">Что хочет</th>
+          <th data-field="total" data-sortable="true">Категория</th>
+          <th data-sortable="true">Когда предложили</th>
+          <th></th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for item, proposer, wish_time in wanted_items %}
+          <tr style="transform: rotate(0);">
+            <td><a href="{% url 'user-items' proposer.id %}" class="stretched-link text-dark text-decoration-none">{{ proposer }}</a></td>
+            <td>{{ item }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ wish_time }}</td>
+            <td>
+              <div class="col text-center" >
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'delete_offer' item.id proposer.id %}" style="z-index:3; position:relative;">Удалить</a>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

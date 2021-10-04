@@ -125,7 +125,8 @@ def show_offers(request):
     wanted_items = []
     for item, users in item_users:
         for user in users:
-            wish_time = item.wish.first().wished_at
+            wish_time = item.wish.first().wished_at.strftime('%d.%m.%Y %H:%M')
+            print(type(wish_time))
             wanted_items.append((item, user, wish_time))
 
     return render(request, 'offers.html', context={'wanted_items': wanted_items})
